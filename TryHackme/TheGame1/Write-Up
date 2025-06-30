@@ -1,1 +1,35 @@
 # The Game 1
+
+Here is my review of The Game, a TryHackMe Capture the Flag (CTF) challenge presented as a video game created using the Godot Engine.
+
+While the traditional approach to solving this CTF would involve careful and time consuming static code analysis, I chose the way I know best: Cheat Engine
+
+Let's get into it
+
+# The Basics
+
+The CTF is given in the form of a zip file containing a Tetris clone. A clue is given in the top left corner: "SCORE MORE THAN 999999"
+
+Well that's a lot of points! We'd be here forever if we did that legitimately. Luckily, we have a tool that can speed this up significantly
+
+# Intro to Cheat Engine
+
+Cheat Engine is a tool made for "hacking" offline single player games. It use OS API calls to read and write the memory of a given process. It then scans the process's RAM for a specified value. You can repeatedly refine this process by tracking the updates of the values.
+
+From then, you can directly edit the values in RAM. Traditionally, this is to make single player games easier (give more HP, deal more damage, etc.) But we will use it to force our point value to 1000000000.
+
+# The Process
+
+First, download and open Cheat Engine (it can be downloaded [here](https://www.cheatengine.org/downloads.php)). Skip the tutorial if offered, we don't need it. Open our Tetris clone.
+
+In the top left, under the File tab, you will see a *desktop with a magnifying glass* icon. Click this to open the process menu. This will show the processes running on the machine. Click "Tetrim (DEBUG)." Now, we can begin our edits.
+
+Start by pausing the game with the pause button, we don't want to lose while we make our edits!
+
+In the value bar, input 0 and make sure the Scan Type is "Exact Value" and the Value Type is "4 Bytes". Click First Scan.
+
+This gives us a ton of results! This is pretty unhelpful in this state. Let's refine it a little.
+
+Keep playing the game until you score some points. Pause the game and set the value to whatever your points are at now. Click Next Scan. This will narrow down the values. Keep doing this until there's only one value left.
+
+Eventually, you'll find the memory address for the points variable. Edit this to be higher than 999999, and the next time you score, the score will freak out and the flag will present itself near the bottom of the screen!
